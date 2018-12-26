@@ -31,7 +31,6 @@ impl X86OperandType {
             X86_OP_REG => Reg(RegId(unsafe { value.reg } as RegIdInt)),
             X86_OP_IMM => Imm(unsafe { value.imm }),
             X86_OP_MEM => Mem(X86OpMem(unsafe { value.mem })),
-            X86_OP_FP => Fp(unsafe { value.fp }),
             X86_OP_INVALID => Invalid,
         }
     }
@@ -108,7 +107,7 @@ impl<'a> X86InsnDetail<'a> {
     }
 
     /// Disp
-    pub fn disp(&self) -> i32 {
+    pub fn disp(&self) -> i64 {
         self.0.disp
     }
 
@@ -296,9 +295,18 @@ mod test {
                 size: 0,
                 avx_bcast: x86_avx_bcast::X86_AVX_BCAST_INVALID,
                 avx_zero_opmask: false,
+                access: 0,
             }
             ; 8],
-
+            __bindgen_anon_1: cs_x86__bindgen_ty_1 { eflags: 0 },
+            encoding: cs_x86_encoding {
+                modrm_offset: 0,
+                disp_offset: 0,
+                disp_size: 0,
+                imm_offset: 0,
+                imm_size: 0,
+            },
+            xop_cc: x86_xop_cc::X86_XOP_CC_INVALID,
         };
         let mut a2 = a1.clone();
         a2.operands[1].type_ = x86_op_type::X86_OP_REG;
